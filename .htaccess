@@ -1,0 +1,7 @@
+# Redirect jika URL berakhir dengan /index.html
+RewriteEngine On
+RewriteCond %{THE_REQUEST} /index\.html
+RewriteRule ^index\.html$ / [R=301,L]
+
+# Alias untuk mengarahkan langsung ke file index.html tanpa menampilkannya
+DirectoryIndex index.html
