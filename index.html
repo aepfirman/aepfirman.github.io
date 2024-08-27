@@ -716,42 +716,31 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-6 col-md-12 col-12">
-						<form class="form" action="send_email.php" method="post">
+						<form class="form" name="pesan_web_ppdb" method="post" action="https://script.google.com/macros/s/AKfycbxUGSuTGAsyMgG_LoZAkDm51cEM5Pe8UvMRFao0ljW5M3B8VxcxO4tp-SV45eSrIaSIfg/exec">>
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<input name="name" type="text" placeholder="Name">
+										<input type="text" id="nama" name="nama" placeholder="Name" required="">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<input name="email" type="email" placeholder="Email">
+										<input type="email" id="email" name="email" placeholder="Email" required="">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<input name="phone" type="text" placeholder="Phone">
+										<input type="text" id="phone" name="phone" placeholder="Phone" required="">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
-        <div class="form-group">
-            <select name="status" class="form-control wide">
-                <option value="1">Siswa</option>
-                <option value="2">Orang Tua</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-12">
-        <div class="form-group">
-            <select name="minat" class="form-control wide">
-                <option value="1">Minat Mendaftar</option>
-                <option value="2">Hanya Bertanya</option>
-            </select>
-        </div>
-    </div>
-								<div class="col-lg-12 col-md-12 col-12">
 									<div class="form-group">
-										<textarea name="message" placeholder="Tulis pesanmu disini....."></textarea>
+										<input type="text" id="judul" name="judul" placeholder="Judul" required="">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<textarea name="pesan" id="pesan" placeholder="Tulis pesanmu disini...." required=""></textarea>
 									</div>
 								</div>
 							</div>
@@ -934,6 +923,36 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!-- Main JS -->
 		<script src="js/main.js"></script>
-		
+		<!-- Scrip google Spreedsheet -->
+		<script>
+			const form = document.forms['pesan_web_ppdb'];
+		  
+			form.addEventListener('submit', function(event) {
+			  event.preventDefault();
+		  
+			  const xhr = new XMLHttpRequest();
+			  xhr.open('POST', form.action, true);
+			  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		  
+			  xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+				  if (xhr.responseText.trim() === 'success') {
+					window.location.href = 'mail-success.html'; // Pengalihan ke halaman mail-success.html
+				  } else {
+					alert('Gagal menyimpan data. Coba lagi.');
+				  }
+				}
+			  };
+		  
+			  const formData = new FormData(form);
+			  const params = new URLSearchParams();
+		  
+			  for (const pair of formData) {
+				params.append(pair[0], pair[1]);
+			  }
+		  
+			  xhr.send(params.toString());
+			});
+		  </script>
     </body>
 </html>
